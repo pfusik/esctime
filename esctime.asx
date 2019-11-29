@@ -1,6 +1,4 @@
-scr	equ	$3080
-sqr	equ	$3800
-sqrhi	equ	$3a00
+sqr	equ	$600
 
 lo	equ	$80
 dest	equ	$80
@@ -26,17 +24,15 @@ init_sqr
 	iny
 	bne	init_sqr
 
-	sei:sty	^4e
-	lda:rne	^4b
-	ldx	#8
-	mva:rpl	colors,x	^13,x-
-	mwa	#dl	^42
-	mwa	#dli	$200
-	mva	#$80	^4e
+	lda	#10
+	jsr	$ef90
+
+	ldx	#7
+	mva:rpl	colors,x	705,x-
 
 	mva	#-128	y
 
-	mwa	#scr	dest
+	mwa	88	dest
 draw_row
 	mva	#80	col
 	mva	#0	x
@@ -52,6 +48,12 @@ draw_pixel
 :4	asl	@
 	eor	pixel
 	sta	(dest),y
+	ldy	#40
+	sta	(dest),y
+	ldy	#80
+	sta	(dest),y
+	ldy	#120
+	sta	(dest),y
 	lda	col
 	lsr	@
 	bcc	draw_hinib
@@ -63,25 +65,15 @@ draw_hinib
 	bne	draw_pixel
 	lda	#4	; dx
 	add:sta	y
-	lda	dest+1
-	cmp	>scr+48*40
+	lda	#120
+	add:sta	dest
+	lda	#0
+	adc:sta	dest+1
+	cmp	>$bf00
 	bcc	draw_row
 
 	jmp	*
 
-dli
-	pha
-	sta	^4a
-	mva	#13	^45
-	mva	#3	^45
-	pla:rti
-
-dl
-	dta	$70,$70,$f0,$6f,a(scr)
-:23	dta	$8f,$2f
-	dta	$f
-	dta	$41,a(dl)
-
-colors	dta	$94,$72,$54,$36,$18,$26,$44,$66,$80
+colors	dta	$94,$72,$54,$36,$18,$26,$44,$66
 
 	run	main
