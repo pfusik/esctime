@@ -5,15 +5,15 @@ function sqr(x)
 
 function mb(x, y)
 {
-	if (y < 0) y = -y;
+//	if (y < 0) y = -y;
 	let A = x;
 	let B = y;
 	for (let c = 0; c < 16; c++) {
 		if (sqr(A) + sqr(B) >= 256)
 			return c;
-		const nA = 2 * (sqr(A) - sqr(B)) + x;
-		B = sqr(A + B) - sqr(A - B) + y;
-		A = nA;
+		const nB = sqr(A + B) - sqr(A - B) + y;
+		A = 2 * (sqr(A) - sqr(B)) + x;
+		B = nB;
 	}
 	return 0;
 }
