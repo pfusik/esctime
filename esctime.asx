@@ -41,11 +41,13 @@ draw_row
 
 draw_pixel
 	mva	#$f0	pixel
-	ldx	#3
-	lda	#0
-	sta:rpl	a,x-
+	mva	#0	a+1
+	sta	b+1
+	tay
 
 calc_step
+	sta	a
+	sty	b
 	ldx	#2
 calc_abs
 	lda	x,x
@@ -114,9 +116,6 @@ b_plus
 	stx	a+1
 	asl	@
 	rol	a+1
-	sta	a
-
-	sty	b
 
 	inc	pixel
 	jne	calc_step
