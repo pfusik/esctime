@@ -142,10 +142,9 @@ draw_out
 	ldy	#120
 	sta	(dest),y
 	lda	col
-	lsr	@
-	bcc	draw_hinib
-	inw	dest
-draw_hinib
+	and	#1
+	ldx	#dest
+	jsr	adw
 	ldx	#x
 	jsr	adw_dx
 	dec	col
