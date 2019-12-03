@@ -46,22 +46,17 @@ draw_pixel
 	mwa	y	b
 
 calc_step
-	ldx	a+1
-	beq	a_ok
-	inx
+	ldx	#2
+calc_abs
+	ldy	a+1,x
+	beq	abs_ok
+	iny
 	jne	draw_out
-	txa
-	sub:sta	a
-a_ok
-	ldx	b+1
-	beq	b_ok
-	inx
-	jne	draw_out
-	lda	#$ff
-	eor:sta	a+1
-	txa
-	sub:sta	b
-b_ok
+	tya
+	sub:sta	a,x
+abs_ok
+	dex:dex
+	bpl	calc_abs
 ; sqr(a) + sqr(b) < 256 ?
 	ldx	a
 	lda	sqr,x
@@ -90,10 +85,13 @@ low_sum
 	adc	#1
 diff_ok
 	tax
+	lda	a+1
+	eor	b+1
+	php
 	lda	c
 	sub	sqr,x
 	scs:dey
-	bit	a+1
+	plp
 	bpl	b_plus
 	eor	#$ff
 	add	#1
