@@ -85,14 +85,12 @@ low_sum
 	adc	#1
 diff_ok
 	tax
-	lda	a+1
-	eor	b+1
-	php
 	lda	c
 	sub	sqr,x
 	scs:dey
-	plp
-	bpl	b_plus
+	ldx	a+1
+	cpx	b+1
+	beq	b_plus
 	eor	#$ff
 	add	#1
 	pha
