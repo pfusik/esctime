@@ -54,12 +54,10 @@ calc_abs
 	add:sta	a,x
 	lda	x+1,x
 	adc:sta	a+1,x
-	tay
 	beq	abs_ok
-	iny
+	add	#1
 	bne	draw_out
-	tya
-	sub:sta	a,x
+	sbc:sta	a,x
 abs_ok
 	dex:dex
 	bpl	calc_abs
