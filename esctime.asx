@@ -42,15 +42,20 @@ draw_row
 draw_pixel
 	mva	#$f0	pixel
 	ldx	#3
-	mva:rpl	x,x	a,x-
+	lda	#0
+	sta:rpl	a,x-
 
 calc_step
 	ldx	#2
 calc_abs
-	ldy	a+1,x
+	lda	x,x
+	add:sta	a,x
+	lda	x+1,x
+	adc:sta	a+1,x
+	tay
 	beq	abs_ok
 	iny
-	jne	draw_out
+	bne	draw_out
 	tya
 	sub:sta	a,x
 abs_ok
@@ -99,11 +104,8 @@ diff_ok
 	tay
 	pla
 b_plus
-	add	y
 	pha
-	tya
-	adc	y+1
-	sta	b+1
+	sty	b+1
 
 ; sqr(a) - sqr(b)
 	ldx	a
@@ -115,10 +117,7 @@ b_plus
 	stx	a+1
 	asl	@
 	rol	a+1
-	add	x
 	sta	a
-	lda	x+1
-	adc:sta	a+1
 
 	pla
 	sta	b
