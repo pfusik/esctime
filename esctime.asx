@@ -92,20 +92,17 @@ diff_ok
 	pla
 	sub	sqr,x
 	scs:dey
-	ldx	a+1
-	cpx	b+1
+	ldx	b+1
+	sty	b+1
+	tay
+	cpx	a+1
 	beq	b_plus
 	eor	#$ff
 	add	#1
-	pha
-	tya
-	eor	#$ff
-	adc	#0
 	tay
-	pla
+	lda	#0
+	sbc:sta	b+1
 b_plus
-	sty	b+1
-	tay
 
 ; sqr(a) - sqr(b)
 	ldx	a
