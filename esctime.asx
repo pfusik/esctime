@@ -103,7 +103,7 @@ diff_ok
 	pla
 b_plus
 	add	y
-	sta	c
+	pha
 	tya
 	adc	y+1
 	sta	b+1
@@ -123,7 +123,8 @@ b_plus
 	lda	x+1
 	adc:sta	a+1
 
-	mva	c	b
+	pla
+	sta	b
 
 	inc	pixel
 	jne	calc_step
