@@ -146,22 +146,27 @@ draw_out
 	bcc	draw_hinib
 	inw	dest
 draw_hinib
-	lda	#4	; dx
-	add:sta	x
-	scc:inc	x+1
+	ldx	#x
+	jsr	adw_dx
 	dec	col
 	jne	draw_pixel
-	lda	#4	; dx
-	add:sta	y
-	scc:inc	y+1
+	ldx	#y
+	jsr	adw_dx
+	ldx	#dest
 	lda	#120
-	add:sta	dest
-	lda	#0
-	adc:sta	dest+1
+	jsr	adw
+	lda	dest+1
 	cmp	>$bf00
 	jcc	draw_row
 
 	jmp	*
+
+adw_dx
+	lda	#4	; dx
+adw
+	add:sta	0,x
+	scc:inc	1,x
+	rts
 
 colors	dta	$94,$72,$54,$36,$18,$46,$64,$86
 
