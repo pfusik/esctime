@@ -1,11 +1,14 @@
-sqr	equ	$600
+sqr	equ	$3800
 
 lo	equ	$80
 dest	equ	$80
 col	equ	$82
 pixel	equ	$83
 x	equ	$84
-y	equ	$85
+y	equ	$86
+a	equ	$88
+b	equ	$8a
+c	equ	$8c
 
 	org	$3b00
 main
@@ -30,23 +33,110 @@ init_sqr
 	ldx	#7
 	mva:rpl	colors,x	705,x-
 
-	mva	#-128	y
+	mwa	#-128	y
 
 	mwa	88	dest
 draw_row
 	mva	#80	col
-	mva	#0	x
+	mwa	#0	x
+
 draw_pixel
-	ldx	x
-	ldy	y
+	mva	#$f0	pixel
+	mwa	x	a
+	mwa	y	b
+
+calc_step
+	ldx	a+1
+	beq	a_ok
+	inx
+	jne	draw_out
+	txa
+	sub:sta	a
+a_ok
+	ldx	b+1
+	beq	b_ok
+	inx
+	jne	draw_out
+	lda	#$ff
+	eor:sta	a+1
+	txa
+	sub:sta	b
+b_ok
+; sqr(a) + sqr(b) < 256 ?
+	ldx	a
 	lda	sqr,x
-	add	sqr,y
-	and	#7
+	ldx	b
+	add	sqr,x
+	bcs	draw_out
+
+; sqr(abs(a) + abs(b))
+	txa
+	adc	a
+	tax
+	lda:tay	#0
+	bcc	low_sum
+	txa
+	asl	@
+	iny
+low_sum
+	adc	sqr,x
+	sta	c
+	scc:iny
+; sqr(abs(a) - abs(b))
+	lda	a
+	sub	b
+	bcs	diff_ok
+	eor	#$ff
+	adc	#1
+diff_ok
+	tax
+	lda	c
+	sub	sqr,x
+	scs:dey
+	bit	a+1
+	bpl	b_plus
+	eor	#$ff
 	add	#1
-	sta	pixel
+	pha
+	tya
+	eor	#$ff
+	adc	#0
+	tay
+	pla
+b_plus
+	add	y
+	sta	c
+	tya
+	adc	y+1
+	sta	b+1
+
+; sqr(a) - sqr(b)
+	ldx	a
+	lda	sqr,x
+	ldx	b
+	sub	sqr,x
+	ldx	#0
+	scs:dex
+	stx	a+1
+	asl	@
+	rol	a+1
+	add	x
+	sta	a
+	lda	x+1
+	adc:sta	a+1
+
+	mva	c	b
+
+	inc	pixel
+	jne	calc_step
+	dec	pixel
+
+draw_out
 	lda	(dest),0
 :4	asl	@
-	eor	pixel
+	eor	#7
+	and	pixel
+	add	#1
 	sta	(dest),y
 	ldy	#40
 	sta	(dest),y
@@ -61,19 +151,21 @@ draw_pixel
 draw_hinib
 	lda	#4	; dx
 	add:sta	x
+	scc:inc	x+1
 	dec	col
-	bne	draw_pixel
+	jne	draw_pixel
 	lda	#4	; dx
 	add:sta	y
+	scc:inc	y+1
 	lda	#120
 	add:sta	dest
 	lda	#0
 	adc:sta	dest+1
 	cmp	>$bf00
-	bcc	draw_row
+	jcc	draw_row
 
 	jmp	*
 
-colors	dta	$94,$72,$54,$36,$18,$26,$44,$66
+colors	dta	$94,$72,$54,$36,$18,$46,$64,$86
 
 	run	main

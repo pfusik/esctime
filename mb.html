@@ -2,7 +2,12 @@
 <head>
 	<script src="mb.js"> </script>
 </head>
-<body onload="main()">
+<body onload="draw()">
 	<canvas id="canvas" width="1600" height="960"> </canvas>
+	<div style="float: right">
+		x: <input id="xSlider" type="range" min="0" max="255" value="0" onchange="draw()" /><br />
+		y: <input id="ySlider" type="range" min="0" max="255" value="0" onchange="draw()" /><br />
+		z: <input id="zSlider" type="range" min="0" max="15" value="4" onchange="draw()" />
+	</div>
 </body>
 </html>

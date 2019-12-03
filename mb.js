@@ -9,9 +9,13 @@ function mb(x, y)
 	let A = x;
 	let B = y;
 	for (let c = 0; c < 16; c++) {
+//console.log("a=", A, " b=", B);
+		let S = (A ^ B) < 0 ? -1 : 1;
+		A = Math.abs(A);
+		B = Math.abs(B);
 		if (sqr(A) + sqr(B) >= 256)
 			return c;
-		const nB = sqr(A + B) - sqr(A - B) + y;
+		const nB = S * (sqr(A + B) - sqr(A - B)) + y;
 		A = 2 * (sqr(A) - sqr(B)) + x;
 		B = nB;
 	}
@@ -52,17 +56,23 @@ let dx = 4;
 
 function draw()
 {
+//	const cx = document.getElementById("xSlider").value | 0;
+//	const cy = document.getElementById("ySlider").value | 0;
+//	const dx = document.getElementById("zSlider").value | 0;
+	const cx = 256; // 0;
+	const cy = 0; // 139;
 	const context = document.getElementById("canvas").getContext("2d");
 	for (let y = 0; y < 48; y++) {
 		for (let x = 0; x < 80; x++) {
-			context.fillStyle = palette[mb((x - 64) * dx, (y - 32) * dx) & 7];
+			context.fillStyle = palette[mb((x - 64) * dx + cx, (y - 32) * dx + cy) & 7];
 			context.fillRect(x * 20, y * 20, 20, 20);
 		}
 	}
-	//dx -= 5 / 256;
+//	dx -= 5 / 256;
 }
 
 function main()
 {
-	setInterval(draw, 100);
+//	setInterval(draw, 100);
+//	mb(4, -128);
 }
