@@ -142,11 +142,13 @@ draw_out
 	ldy	#120
 	sta	(dest),y
 	lda	col
-	cmp	#2
-	and	#1
-	scs:lda	#121
+	lsr	@
+	bcc	same_byte
+	seq:tya
+	eor	#121
 	ldx	#dest
 	jsr	adw
+same_byte
 	ldx	#x
 	jsr	adw_dx
 	dec	col
