@@ -104,8 +104,8 @@ diff_ok
 	tay
 	pla
 b_plus
-	pha
 	sty	b+1
+	tay
 
 ; sqr(a) - sqr(b)
 	ldx	a
@@ -119,8 +119,7 @@ b_plus
 	rol	a+1
 	sta	a
 
-	pla
-	sta	b
+	sty	b
 
 	inc	pixel
 	jne	calc_step
