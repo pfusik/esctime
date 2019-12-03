@@ -42,8 +42,8 @@ draw_row
 
 draw_pixel
 	mva	#$f0	pixel
-	mwa	x	a
-	mwa	y	b
+	ldx	#3
+	mva:rpl	x,x	a,x-
 
 calc_step
 	ldx	#2
