@@ -46,12 +46,10 @@ draw_pixel
 	tay
 
 calc_step
-	sta	a
-	sty	b
-	ldx	#2
+	ldx	#0
 calc_abs
-	lda	x,x
-	add:sta	a,x
+	add	x,x
+	sta	a,x
 	lda	x+1,x
 	adc:sta	a+1,x
 	beq	abs_ok
@@ -59,8 +57,10 @@ calc_abs
 	bne	draw_out
 	sbc:sta	a,x
 abs_ok
-	dex:dex
-	bpl	calc_abs
+	tya
+	inx:inx
+	cpx	#4
+	bcc	calc_abs
 ; sqr(a) + sqr(b) < 256 ?
 	ldx	a
 	lda	sqr,x
