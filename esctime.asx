@@ -8,7 +8,6 @@ x	equ	$84
 y	equ	$86
 a	equ	$88
 b	equ	$8a
-c	equ	$8c
 
 	org	$3b00
 main
@@ -75,7 +74,7 @@ abs_ok
 	iny
 low_sum
 	adc	sqr,x
-	sta	c
+	pha
 	scc:iny
 ; sqr(abs(a) - abs(b))
 	lda	a
@@ -85,7 +84,7 @@ low_sum
 	adc	#1
 diff_ok
 	tax
-	lda	c
+	pla
 	sub	sqr,x
 	scs:dey
 	ldx	a+1
