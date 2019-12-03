@@ -142,7 +142,9 @@ draw_out
 	ldy	#120
 	sta	(dest),y
 	lda	col
+	cmp	#2
 	and	#1
+	scs:lda	#121
 	ldx	#dest
 	jsr	adw
 	ldx	#x
@@ -151,9 +153,6 @@ draw_out
 	jne	draw_pixel
 	ldx	#y
 	jsr	adw_dx
-	ldx	#dest
-	lda	#120
-	jsr	adw
 	lda	dest+1
 	cmp	>$bf00
 	jcc	draw_row
