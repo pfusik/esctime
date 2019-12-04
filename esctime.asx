@@ -31,12 +31,12 @@ init_sqr
 	lda	#9
 	jsr	$ef90
 
-	mwa	#-128	y
+	mwa	#-120	y
 
 	mwa	88	dest
 draw_row
 	mva	#80	col
-	mwa	#0	x
+	mwx	#-256	x
 
 draw_pixel
 	mva	#0	a+1
@@ -155,7 +155,7 @@ same_byte
 	jmp	*
 
 adw_dx
-	lda	#4	; dx
+	lda	#5	; dx
 adw
 	add:sta	0,x
 	scc:inc	1,x
