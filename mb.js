@@ -8,7 +8,7 @@ function mb(x, y)
 //	if (y < 0) y = -y;
 	let A = x;
 	let B = y;
-	for (let c = 0; c < 16; c++) {
+	for (let c = 0; c < 15; c++) {
 //console.log("a=", A, " b=", B);
 		let S = (A ^ B) < 0 ? -1 : 1;
 		A = Math.abs(A);
@@ -19,7 +19,7 @@ function mb(x, y)
 		A = 2 * (sqr(A) - sqr(B)) + x;
 		B = nB;
 	}
-	return 0;
+	return 15;
 }
 
 const altirrapal = [
@@ -41,30 +41,19 @@ const altirrapal = [
 "#3f0000", "#500500", "#611600", "#722700", "#833800", "#944900", "#a55a01", "#b66b12", "#c77c23", "#d88d34", "#e99e45", "#faaf56", "#ffc067", "#ffd178", "#ffe289", "#fff39a"
 ];
 
-const palette = [
-	altirrapal[0x94],
-	altirrapal[0x72],
-	altirrapal[0x54],
-	altirrapal[0x36],
-	altirrapal[0x18],
-	altirrapal[0x26],
-	altirrapal[0x44],
-	altirrapal[0x66]
-];
-
-let dx = 4;
+//let dx = 4;
 
 function draw()
 {
-//	const cx = document.getElementById("xSlider").value | 0;
-//	const cy = document.getElementById("ySlider").value | 0;
-//	const dx = document.getElementById("zSlider").value | 0;
-	const cx = 256; // 0;
-	const cy = 0; // 139;
+	const cx = document.getElementById("xSlider").value | 0;
+	const cy = document.getElementById("ySlider").value | 0;
+	const dx = document.getElementById("zSlider").value | 0;
+//	const cx = 256; // 0;
+//	const cy = 0; // 139;
 	const context = document.getElementById("canvas").getContext("2d");
 	for (let y = 0; y < 48; y++) {
 		for (let x = 0; x < 80; x++) {
-			context.fillStyle = palette[mb((x - 64) * dx + cx, (y - 32) * dx + cy) & 7];
+			context.fillStyle = altirrapal[0x70 ^ mb((x - 64) * dx + cx, (y - 32) * dx + cy)];
 			context.fillRect(x * 20, y * 20, 20, 20);
 		}
 	}
