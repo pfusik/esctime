@@ -1,3 +1,4 @@
+;COMPATIBLE	equ	0
 KONOP	equ	1
 
 sqr	equ	$3800
@@ -28,8 +29,16 @@ init_sqr
 	iny
 	bne	init_sqr
 
+	ift	COMPATIBLE
+	ldx	#$60
+	mva	#3	$342,x
+	mwa	#screen_device	$344,x
+	mva	#9	$34b,x
+	jsr	$e456
+	els
 	lda	#9
 	jsr	$ef90
+	eif
 
 	mwa	#-120	y
 
@@ -161,4 +170,9 @@ adw
 	scc:inc	1,x
 	rts
 
+	ift	COMPATIBLE
+screen_device	dta	c'S:',$9b
+
 	run	main
+	eif
+

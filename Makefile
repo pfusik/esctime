@@ -1,5 +1,8 @@
-run: esctime.xex
+run: esctime.xex esctimec.xex
 	start $<
 
-%.xex: %.asx
-	xasm -o $@ $<
+esctime.xex: esctime.asx
+	xasm -o $@ -d COMPATIBLE=0 $<
+
+esctimec.xex: esctime.asx
+	xasm -o $@ -d COMPATIBLE=1 -q $<
