@@ -1,3 +1,5 @@
+KONOP	equ	1
+
 sqr	equ	$3800
 
 lo	equ	$80
@@ -118,14 +120,18 @@ b_plus
 	jcc	calc_step
 
 draw_out
-	lda	(dest),0
+:KONOP	ldy	#40
+:!KONOP	ldy	#0
+	lda	(dest),y
 :4	asl	@
 	eor	pixel
 	sta	(dest),y
+	ift	!KONOP
 	ldy	#40
 	sta	(dest),y
 	ldy	#80
 	sta	(dest),y
+	eif
 	ldy	#120
 	sta	(dest),y
 	lda	col
