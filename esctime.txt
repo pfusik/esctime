@@ -1,0 +1,34 @@
+Taquart presents
+"Escape Time"
+
+256-byte intro for Atari XL/XE
+PAL/NTSC compatible
+
+Calculating Mandelbrot fractal
+using the "Escape Time" algorithm
+
+First presented in December 2019
+at the Silly Venture party
+
+Programmed by
+Piotr '0xF' Fusik <fox@scene.pl>
+
+ESCTIME.XEX  = small version
+ESCTIMEC.XEX = compatible version
+               (non-standard OS)
+
+Greetings:
+Lamers, Agenda, Desire, LaResistance,
+MEC, Mad Team, New Generation,
+Mystic Bytes, Zelax, Slight,
+Tristesse, Blowjobb, Our 5oft,
+Bit Busters, DLT, Satantronic, Samar,
+SSG, Sword Soft, JAC!, XXL, Kaz, TDC,
+Duddie, PG, MaPa, Rumun, Jell, Zenon,
+Nir Dery, Marok, Candle, Sikor,
+Grzybson, Henryk, Yerzmyey.
+
+Coming soon to pouet.net.
+Video coming soon to YouTube.
+Source code:
+https://github.com/pfusik/esctime
