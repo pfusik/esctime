@@ -14,8 +14,8 @@ Programmed by
 Piotr '0xF' Fusik <fox@scene.pl>
 
 ESCTIME.XEX  = small version
-ESCTIMEC.XEX = compatible version
-               (non-standard OS)
+ESCTIMEC.XEX = version compatible
+               with non-standard OSes
 
 Greetings:
 Lamers, Agenda, Desire, LaResistance,
