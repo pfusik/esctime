@@ -51,10 +51,10 @@ function draw()
 //	const cx = 256; // 0;
 //	const cy = 0; // 139;
 	const context = document.getElementById("canvas").getContext("2d");
-	for (let y = 0; y < 48; y++) {
+	for (let y = 0; y < 192; y++) {
 		for (let x = 0; x < 80; x++) {
-			context.fillStyle = altirrapal[0x70 ^ mb(x * dx + cx, y * dx + cy)];
-			context.fillRect(x * 20, y * 20, 20, 20);
+			context.fillStyle = altirrapal[0x70 ^ mb(x * dx + cx, (y * dx >> 2) + cy)];
+			context.fillRect(x * 20, y * 5, 20, 5);
 		}
 	}
 //	dx -= 5 / 256;
