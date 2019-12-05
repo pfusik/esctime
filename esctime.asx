@@ -1,11 +1,10 @@
 ;COMPATIBLE	equ	0
+START_Y	equ	-120
 
 sqr	equ	$3800
 
 lo	equ	$80
 dest	equ	88
-col	equ	$80
-row	equ	$81
 pixel	equ	$83
 x	equ	$84
 y	equ	$86
@@ -28,6 +27,12 @@ init_sqr
 	adc	sqr,y
 	iny
 	bne	init_sqr
+	ift	START_Y>>8==-1
+	dey
+	els
+	ert	START_Y>>8!=0
+	eif
+	sty	y+1
 
 	ift	COMPATIBLE
 	ldx	#$60
@@ -40,19 +45,14 @@ init_sqr
 	jsr	$ef90
 	eif
 
-	mva	#192	row
+	ldy	<START_Y
 
 draw_row
-	lda	#192-120
-	sub	row
-	sta	y
-	mva	#80	col
-	sbc	#80
-	sta	y+1
+	sty	y
+	lda	#0
 
 draw_pixel
-	lda	#80
-	sub	col
+	pha
 	asl	@
 	asl	@
 	sta	x
@@ -97,14 +97,19 @@ draw_out
 :4	asl	@
 	eor	pixel
 	sta	(dest),y
-	lda	col
+	pla
 	lsr	@
 	scc:inw	dest
-	dec	col
-	bne	draw_pixel
-	dec	row
+	rol	@
+	adc	#1
+	cmp	#80
+	bcc	draw_pixel
+	ldy	y
+	iny
+	sne:inc	y+1
+	cpy	<START_Y+192
+	bne	draw_row
 	beq	*
-	jmp	draw_row
 
 calc
 ; sqr(abs(a) + abs(b))
