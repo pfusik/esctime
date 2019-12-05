@@ -43,7 +43,7 @@ init_sqr
 	mva	#192	row
 
 draw_row
-	lda	#72
+	lda	#192-120
 	sub	row
 	sta	y
 	mva	#80	col
@@ -86,7 +86,27 @@ abs_ok
 	ldx	b
 	add	sqr,x
 	bcs	draw_out
+	jsr	calc
+	ldx	pixel
+	inx
+	cpx	#$10
+	bcc	calc_step
 
+draw_out
+	lda	(dest),0
+:4	asl	@
+	eor	pixel
+	sta	(dest),y
+	lda	col
+	lsr	@
+	scc:inw	dest
+	dec	col
+	bne	draw_pixel
+	dec	row
+	beq	*
+	jmp	draw_row
+
+calc
 ; sqr(abs(a) + abs(b))
 	txa
 	adc	a
@@ -133,25 +153,7 @@ b_plus
 	stx	a+1
 	asl	@
 	rol	a+1
-
-	ldx	pixel
-	inx
-	cpx	#$10
-	jcc	calc_step
-
-draw_out
-	lda	(dest),0
-:4	asl	@
-	eor	pixel
-	sta	(dest),y
-	lda	col
-	lsr	@
-	scc:inw	dest
-	dec	col
-	jne	draw_pixel
-	dec	row
-	beq	*
-	jmp	draw_row
+	rts
 
 	ift	COMPATIBLE
 screen_device	dta	c'S:',$9b
