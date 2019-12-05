@@ -1,11 +1,11 @@
 ;COMPATIBLE	equ	0
-KONOP	equ	1
 
 sqr	equ	$3800
 
 lo	equ	$80
-dest	equ	$80
-col	equ	$82
+dest	equ	88
+col	equ	$80
+row	equ	$81
 pixel	equ	$83
 x	equ	$84
 y	equ	$86
@@ -40,18 +40,29 @@ init_sqr
 	jsr	$ef90
 	eif
 
-	mwa	#-120	y
+	mva	#192	row
 
-	mwa	88	dest
 draw_row
+	lda	#72
+	sub	row
+	sta	y
 	mva	#80	col
-	mwx	#-256	x
+	sbc	#80
+	sta	y+1
 
 draw_pixel
+	lda	#80
+	sub	col
+	asl	@
+	asl	@
+	sta	x
 	mva	#0	a+1
 	sta	b+1
 	tax
 	tay
+	adc	>-256
+	sta	x+1
+	txa
 
 calc_step
 	stx	pixel
@@ -129,46 +140,18 @@ b_plus
 	jcc	calc_step
 
 draw_out
-:KONOP	ldy	#40
-:!KONOP	ldy	#0
-	lda	(dest),y
+	lda	(dest),0
 :4	asl	@
 	eor	pixel
 	sta	(dest),y
-	ift	!KONOP
-	ldy	#40
-	sta	(dest),y
-	ldy	#80
-	sta	(dest),y
-	eif
-	ldy	#120
-	sta	(dest),y
 	lda	col
 	lsr	@
-	bcc	same_byte
-	seq:tya
-	eor	#121
-	ldx	#dest
-	jsr	adw
-same_byte
-	ldx	#x
-	jsr	adw_dx
+	scc:inw	dest
 	dec	col
 	jne	draw_pixel
-	ldx	#y
-	jsr	adw_dx
-	lda	dest+1
-	cmp	>$bf00
-	jcc	draw_row
-
-	jmp	*
-
-adw_dx
-	lda	#5	; dx
-adw
-	add:sta	0,x
-	scc:inc	1,x
-	rts
+	dec	row
+	beq	*
+	jmp	draw_row
 
 	ift	COMPATIBLE
 screen_device	dta	c'S:',$9b
