@@ -77,7 +77,9 @@ calc_abs
 	beq	abs_ok
 	add	#1
 	bne	draw_out
-	sbc:sta	a+4,x
+	sbc	a+4,x
+	beq	draw_out
+	sta	a+4,x
 abs_ok
 	tya
 	inx:inx

@@ -6,7 +6,7 @@ Escape Time
 [8-bit Atari computers](http://en.wikipedia.org/wiki/Atari_8-bit_family).
 It calculates a
 [Mandelbrot fractal](https://en.wikipedia.org/wiki/Mandelbrot_set)
-using the "Escape Time" algorithm implemented in a 253-byte program.
+using the "Escape Time" algorithm implemented in a 255-byte program.
 
 Credits
 -------

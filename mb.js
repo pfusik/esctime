@@ -6,8 +6,8 @@ function sqr(x)
 function mb(x, y)
 {
 //	if (y < 0) y = -y;
-	let A = x;
-	let B = y;
+	let A = 0;
+	let B = 0;
 	for (let c = 0; c < 15; c++) {
 //console.log("a=", A, " b=", B);
 		let S = (A ^ B) < 0 ? -1 : 1;
@@ -63,5 +63,5 @@ function draw()
 function main()
 {
 //	setInterval(draw, 100);
-//	mb(4, -128);
+	mb(-256, -120);
 }
