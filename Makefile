@@ -6,3 +6,6 @@ esctime.xex: esctime.asx
 
 esctimec.xex: esctime.asx
 	xasm -o $@ -d COMPATIBLE=1 -q $<
+
+esctime.zip: esctime.xex esctimec.xex esctime.txt
+	7z a -mx=9 -bd -bso0 -tzip $@ $^
