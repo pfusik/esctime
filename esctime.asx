@@ -1,4 +1,5 @@
 ;COMPATIBLE	equ	0
+COLOR	equ	$70
 START_Y	equ	-120
 
 sqr	equ	$3800
@@ -44,6 +45,7 @@ init_sqr
 	lda	#9
 	jsr	$ef90
 	eif
+	mva	#COLOR	$2c8
 
 	ldy	<START_Y
 
@@ -162,7 +164,7 @@ b_plus
 
 	ift	COMPATIBLE
 screen_device	dta	c'S:',$9b
+	eif
 
 	run	main
-	eif
 
