@@ -7,6 +7,7 @@ Escape Time
 It calculates a
 [Mandelbrot fractal](https://en.wikipedia.org/wiki/Mandelbrot_set)
 using the "Escape Time" algorithm implemented in a 255-byte program.
+
 It took third place in the Atari XL/XE 256-byte intro competition
 at [Silly Venture](http://sillyventure.eu) in December 2019.
 
