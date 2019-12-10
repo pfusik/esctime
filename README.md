@@ -7,6 +7,8 @@ Escape Time
 It calculates a
 [Mandelbrot fractal](https://en.wikipedia.org/wiki/Mandelbrot_set)
 using the "Escape Time" algorithm implemented in a 255-byte program.
+It took third place in the Atari XL/XE 256-byte intro competition
+at [Silly Venture](http://sillyventure.eu) in December 2019.
 
 Credits
 -------
@@ -18,4 +20,12 @@ Used Tools
 
 [xasm](http://xasm.atari.org), [SciTE](http://scintilla.org/SciTE.html),
 [Altirra](http://www.virtualdub.org/altirra.html),
-[Opera](https://www.opera.com) for HTML 5 prototype.
+GNU Make.
+
+[Opera](https://www.opera.com) for an HTML 5 prototype.
+
+Link
+----
+
+Download, watch on YouTube, comment and vote at
+[pouet.net](https://www.pouet.net/prod.php?which=84131).
