@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/pfusik/esctime.svg?branch=master)](https://travis-ci.org/pfusik/esctime)
+[![Build Status](https://travis-ci.com/pfusik/esctime.svg?branch=master)](https://travis-ci.com/github/pfusik/esctime)
 
 Escape Time
 ===========
